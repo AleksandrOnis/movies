@@ -2,15 +2,21 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchSearchMovie } from '../services/moviesApi';
 import SearchForm from '../components/SearchForm/SearchForm';
+import Loading from '../components/Loading/Loading';
 
 function MoviesView() {
   const [movies, setMovies] = useState(null);
   const [query, setQuery] = useState('');
+  const [status, setStatus] = useState(null);
 
-  useEffect(() => query && searchMovie(query), [query]);
+  useEffect(() => {
+    query && searchMovie(query);
+  }, [query]);
 
   async function searchMovie(query) {
-    await fetchSearchMovie(query).then(({ results }) => setMovies(results)); //попробывать ссылкой без вызова setMovies без колбэка
+    setStatus('loading');
+    await fetchSearchMovie(query).then(({ results }) => setMovies(results));
+    setStatus(null);
   }
 
   const getQuery = value => setQuery(value);
@@ -18,6 +24,7 @@ function MoviesView() {
   return (
     <>
       <SearchForm onSubmit={getQuery} />
+      {status && <Loading />}
       {movies && (
         <ul>
           {movies.map(movie => {
