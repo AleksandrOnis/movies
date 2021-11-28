@@ -1,4 +1,4 @@
-import { useParams, Route, Routes } from 'react-router';
+import { useParams, Route, Routes, useNavigate } from 'react-router';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { fetchMovieDetails } from '../services/moviesApi';
 import MovieDescription from '../components/MovieDescription/MovieDescription';
@@ -11,6 +11,8 @@ const Reviews = lazy(() =>
 
 function MovieDetailsView() {
   const { movieId } = useParams();
+  const navigate = useNavigate();
+
   const [movie, setMovie] = useState(null);
 
   useEffect(() => getMovieDetails(movieId), [movieId]);
@@ -22,6 +24,9 @@ function MovieDetailsView() {
   return (
     movie && (
       <>
+        <button type="button" onClick={() => navigate(-1)}>
+          Go back
+        </button>
         <MovieDescription movie={movie} />
         <Suspense fallback={<Loading />}>
           <Routes>
