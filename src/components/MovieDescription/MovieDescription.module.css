@@ -1,0 +1,30 @@
+.section {
+  display: flex;
+  justify-content: left;
+}
+
+.description {
+  padding-left: 30px;
+}
+
+.additionalInfo {
+  composes: section;
+  flex-direction: column;
+}
+
+.item {
+  margin-bottom: 10px;
+}
+
+.image {
+  min-width: 250px;
+  height: auto;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+a {
+  text-decoration: none;
+}
