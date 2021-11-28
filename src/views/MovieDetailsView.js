@@ -1,4 +1,4 @@
-import { useParams, Route, Routes, useNavigate } from 'react-router';
+import { useParams, Route, Routes, useNavigate, useLocation } from 'react-router';
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { fetchMovieDetails } from '../services/moviesApi';
 import MovieDescription from '../components/MovieDescription/MovieDescription';
@@ -12,10 +12,15 @@ const Reviews = lazy(() =>
 function MovieDetailsView() {
   const { movieId } = useParams();
   const navigate = useNavigate();
+  // const location = useLocation();
 
   const [movie, setMovie] = useState(null);
 
+  // const queryFromSearchParameter = new URLSearchParams(location.search).get('query');
+  // console.log('🚀 ~ MovieDetailsView ~ queryFromSearchParameter', queryFromSearchParameter);
+
   useEffect(() => getMovieDetails(movieId), [movieId]);
+  // useEffect(() => getMovieDetails(movieId), [navigate, location]); //query
 
   async function getMovieDetails(id) {
     await fetchMovieDetails(id).then(data => setMovie(data));

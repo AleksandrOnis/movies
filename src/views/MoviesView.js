@@ -11,6 +11,10 @@ function MoviesView() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const queryFromSearchParameter = new URLSearchParams(location.search).get('query');
+
+  useEffect(() => queryFromSearchParameter && searchMovie(queryFromSearchParameter), []);
+
   useEffect(() => {
     query && searchMovie(query);
   }, [query]);
