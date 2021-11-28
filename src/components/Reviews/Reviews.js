@@ -16,7 +16,7 @@ function Reviews() {
   return reviews?.length ? (
     <ul>
       {reviews.map(review => (
-        <li key={reviews.id} className={s.item}>
+        <li key={review.id} className={s.item}>
           <h4 className={s.title}>{review.author}</h4>
           <p className={s.text}>{review.content}</p>
         </li>
