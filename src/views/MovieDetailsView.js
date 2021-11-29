@@ -12,15 +12,10 @@ const Reviews = lazy(() =>
 function MovieDetailsView() {
   const { movieId } = useParams();
   const navigate = useNavigate();
-  // const location = useLocation();
-
+  const location = useLocation();
   const [movie, setMovie] = useState(null);
 
-  // const queryFromSearchParameter = new URLSearchParams(location.search).get('query');
-  // console.log('🚀 ~ MovieDetailsView ~ queryFromSearchParameter', queryFromSearchParameter);
-
   useEffect(() => getMovieDetails(movieId), [movieId]);
-  // useEffect(() => getMovieDetails(movieId), [navigate, location]); //query
 
   async function getMovieDetails(id) {
     await fetchMovieDetails(id).then(data => setMovie(data));
@@ -29,7 +24,12 @@ function MovieDetailsView() {
   return (
     movie && (
       <>
-        <button type="button" onClick={() => navigate(-1)}>
+        <button
+          type="button"
+          onClick={() =>
+            location.pathname.includes(`/movies/${movieId}/`) ? navigate(-2) : navigate(-1)
+          }
+        >
           Go back
         </button>
         <MovieDescription movie={movie} />
