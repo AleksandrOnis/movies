@@ -36,9 +36,14 @@ function MoviesView() {
         <ul>
           {movies.map(movie => {
             return (
-              <Link key={movie.id} to={`/movies/${movie.id}`}>
-                <li>{movie.title}</li>
-              </Link>
+              <li key={movie.id}>
+                <Link
+                  to={`/movies/${movie.id}`}
+                  state={{ from: { location, label: 'Back to movies' } }}
+                >
+                  {movie.title}
+                </Link>
+              </li>
             );
           })}
         </ul>

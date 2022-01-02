@@ -1,8 +1,12 @@
 import s from './MovieDescription.module.css';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function MovieDescription({ movie }) {
+  const location = useLocation();
+  const locationFrom = location?.state?.from?.location;
+
+  const label = locationFrom?.pathname.includes('/movies') ? 'Back to movies' : 'Back to home';
   return (
     movie && (
       <div className={s.container}>
@@ -26,12 +30,32 @@ function MovieDescription({ movie }) {
         <div className={s.additionalInfo}>
           <h3 className={s.title}>Additional information</h3>
           <ul>
-            <NavLink to={`/movies/${movie.id}/cast`}>
-              <li className={s.item}>Cast</li>
-            </NavLink>
-            <NavLink to={`/movies/${movie.id}/reviews`}>
-              <li className={s.item}>Reviews</li>
-            </NavLink>
+            <li className={s.item}>
+              <Link
+                to={`/movies/${movie.id}/cast`}
+                state={{
+                  from: {
+                    location: locationFrom,
+                    label,
+                  },
+                }}
+              >
+                Cast
+              </Link>
+            </li>
+            <li className={s.item}>
+              <Link
+                to={`/movies/${movie.id}/reviews`}
+                state={{
+                  from: {
+                    location: locationFrom,
+                    label,
+                  },
+                }}
+              >
+                Reviews
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

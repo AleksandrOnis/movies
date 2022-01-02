@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetchTrending } from '../services/moviesApi';
 
 function HomeView() {
   const [movies, setMovies] = useState();
+  const location = useLocation();
 
-  useEffect(() => searchTrendMovies(), [movies]);
+  useEffect(() => searchTrendMovies(), []);
 
   async function searchTrendMovies() {
     await fetchTrending().then(({ results }) => setMovies(results));
@@ -15,9 +16,14 @@ function HomeView() {
       <div>
         <ul>
           {movies.map(movie => (
-            <Link key={movie.id} to={`/movies/${movie.id}`}>
-              <li>{movie.title}</li>
-            </Link>
+            <li key={movie.id}>
+              <Link
+                to={`/movies/${movie.id}`}
+                state={{ from: { location, label: 'Back to home' } }}
+              >
+                {movie.title}
+              </Link>
+            </li>
           ))}
         </ul>
       </div>

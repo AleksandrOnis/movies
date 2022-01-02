@@ -21,16 +21,15 @@ function MovieDetailsView() {
     await fetchMovieDetails(id).then(data => setMovie(data));
   }
 
+  function onGoBack() {
+    navigate(location?.state?.from?.location ?? '/');
+  }
+
   return (
     movie && (
       <>
-        <button
-          type="button"
-          onClick={() =>
-            location.pathname.includes(`/movies/${movieId}/`) ? navigate(-2) : navigate(-1)
-          }
-        >
-          Go back
+        <button type="button" onClick={onGoBack}>
+          {location?.state?.from?.label ?? 'Go back'}
         </button>
         <MovieDescription movie={movie} />
         <Suspense fallback={<Loading />}>
